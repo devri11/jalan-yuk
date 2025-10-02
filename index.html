@@ -57,7 +57,8 @@
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 10px;
+      gap: 15px;
+      position: relative;
     }
 
     button {
@@ -73,17 +74,13 @@
       background: #a8e6a3;
       color: #333;
       z-index: 2;
+      position: relative;
     }
 
-    /* Tombol No jadi fixed, bebas di layar */
     #noBtn {
       background: #f7a7a3;
       color: white;
-      position: fixed;
-      top: 70%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
+      position: relative; /* start normal, then move absolute */
     }
 
     /* Animasi sparkle */
@@ -134,19 +131,17 @@
   <div class="popup" id="mainPopup">
     <div class="popup-header">✨ Hellloowww ✨</div>
     <img src="https://media.tenor.com/Du9VVJYDPDkAAAAi/tkthao219-bubududu.gif" alt="Cute Character">
-    <h2>Haaii Sainnnnn ✨<br>Weekendd ini jadi bisa jalan barengg gaakk?? hwehwehwe</h2>
+    <h2>Haaii Sainnnnn ✨<br>Weekend ini jadi bisa jalan barengg gaakk?? hwehwehwe</h2>
     <div class="buttons">
-      <button id="yesBtn">Yukkkkkk</button>
+      <button id="yesBtn">Yukkkkk 😆🚀</button>
+      <button id="noBtn">Ga ah malezzz 😴</button>
     </div>
   </div>
-
-  <!-- Tombol No bebas -->
-  <button id="noBtn">Ga ah malezzz</button>
 
   <!-- Popup sukses -->
   <div class="success-popup" id="successPopup">
     <img src="https://media.tenor.com/llHp4YtegvwAAAAj/bubu-dudu-sseeyall.gif" alt="Happy Character">
-    <h2>Yeayyyy!!!! 😆<br>Detailnya kita bahas di WhatsApp yaa 📱</h2>
+    <h2>Yeayyyy!!!! 🥳🎉😆<br>Detailnya kita bahas di WhatsApp yaa 💬📱💌</h2>
   </div>
 
   <script>
@@ -157,6 +152,7 @@
 
     // Tombol "No" kabur
     noBtn.addEventListener("mouseover", () => {
+      noBtn.style.position = "fixed"; // switch ke bebas
       const x = Math.floor(Math.random() * (window.innerWidth - noBtn.clientWidth));
       const y = Math.floor(Math.random() * (window.innerHeight - noBtn.clientHeight));
       noBtn.style.left = x + "px";
