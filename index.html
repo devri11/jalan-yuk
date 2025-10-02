@@ -10,7 +10,7 @@
       padding: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background-color: #fdf6f0;
-      background-image: url('https://i.ibb.co/KDxNNmK/flower-bg.png'); /* Bisa ganti dengan gambar bunga PNG transparan */
+      background-image: url('https://i.ibb.co/KDxNNmK/flower-bg.png');
       background-size: cover;
       background-position: center;
       display: flex;
@@ -56,7 +56,8 @@
 
     .buttons {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+      gap: 10px;
     }
 
     button {
@@ -71,15 +72,21 @@
     #yesBtn {
       background: #a8e6a3;
       color: #333;
+      z-index: 2;
     }
 
+    /* Tombol No jadi fixed, bebas di layar */
     #noBtn {
       background: #f7a7a3;
       color: white;
-      position: absolute;
+      position: fixed;
+      top: 70%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
     }
 
-    /* Animasi sparkle mengikuti cursor */
+    /* Animasi sparkle */
     .sparkle {
       position: fixed;
       font-size: 14px;
@@ -130,9 +137,11 @@
     <h2>Haaii Sainnnnn ✨<br>Weekendd ini jadi bisa jalan barengg gaakk?? hwehwehwe</h2>
     <div class="buttons">
       <button id="yesBtn">Yukkkkkk</button>
-      <button id="noBtn">Ga ah malezzz</button>
     </div>
   </div>
+
+  <!-- Tombol No bebas -->
+  <button id="noBtn">Ga ah malezzz</button>
 
   <!-- Popup sukses -->
   <div class="success-popup" id="successPopup">
@@ -158,6 +167,7 @@
     yesBtn.addEventListener("click", () => {
       mainPopup.style.display = "none";
       successPopup.style.display = "block";
+      noBtn.style.display = "none"; // tombol No ikut hilang
     });
 
     // Trail sparkle
