@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajak Jalan Cantik ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pink: '#ff6b9d',
+                        purple: '#a55eea',
+                        blue: '#74b9ff',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); font-family: 'Poppins', sans-serif; }
+        .page { display: none; min-height: 100vh; padding: 2rem; }
+        .page.active { display: block; }
+        .heart { position: fixed; pointer-events: none; z-index: 1000; font-size: 20px; color: #ff6b9d; animation: float 3s ease-out forwards; }
+        @keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; } }
+        .escaping-btn { transition: all 0.3s ease; }
+        .escaping-btn:hover { transform: translate(calc(50vw * (Math.random() - 0.5) * 2), calc(50vh * (Math.random() - 0.5) * 2)); }
+        .stepper { display: flex; justify-content: space-between; margin-bottom: 2rem; }
+        .step { width: 30px; height: 30px; border-radius: 50%; background: #ff6b9d; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .step.completed { background: #a55eea; }
+        .confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
+        .confetti-piece { position: absolute; width: 10px; height: 10px; background: #ff6b9d; animation: confetti-fall 3s linear forwards; }
+        @keyframes confetti-fall { 0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Page 1 -->
+    <div id="page1" class="page active flex flex-col items-center justify-center text-center">
+        <div class="text-4xl md:text-6xl font-bold text-purple-600 mb-8 animate-bounce">
+            Haii 👋, kamu weekend ini bisa jalan sama aku gak?
+        </div>
+        <div class="space-y-4">
+            <button onclick="goToPage(2)" class="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform hover:scale-105 transition-all">
+                Bisa dong ✨
+            </button>
+            <button id="escapeBtn" class="escaping-btn bg-gray-400 hover:bg-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg">
+                Hmm belum bisa 😅
+            </button>
+        </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div id="page2" class="page flex flex-col items-center justify-center">
+        <div class="text-3xl font-bold text-pink-600 mb-8">Ayo rencanain yuk! ❤️</div>
+        <div class="stepper mb-8">
+            <div class="step" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+        </div>
+        
+        <!-- Step 1: Hari -->
+        <div id="step1-content" class="w-full max-w-md mb-8">
+            <h2 class="text-2xl font-semibold text-purple-600 mb-4">Lebih enak Sabtu atau Minggu nih?</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectDay('Sabtu')" class="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold">Sabtu 🌞</button>
+                <button onclick="selectDay('Minggu')" class="bg-orange-400 hover:bg-orange-500 text-black px-6 py-3 rounded-lg font-semibold">Minggu 🌻</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Durasi -->
+        <div id="step2-content" class="w-full max-w-md mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-purple-600 mb-4">Mau jalan full day atau sebentar aja?</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectDuration('Full day')" class="bg-green-400 hover:bg-green-500 text-black px-6 py-3 rounded-lg font-semibold">Full day 🚀</button>
+                <button onclick="selectDuration('Half day')" class="bg-purple-400 hover:bg-purple-500 text-black px-6 py-3 rounded-lg font-semibold">Half day 🌙</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Tipe -->
+        <div id="step3-content" class="w-full max-w-md mb-8 hidden">
+            <h2 class="text-2xl font-semibold text-purple-600 mb-4">Mau ada activity seru atau santai aja ngobrol?</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectType('Activity')" class="bg-pink-400 hover:bg-pink-500 text-black px-6 py-3 rounded-lg font-semibold">Activity 🎉</button>
+                <button onclick="selectType('Santai')" class="bg-blue-400 hover:bg-blue-500 text-black px-6 py-3 rounded-lg font-semibold">Santai ☕</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Options based on type -->
+        <div id="step4-content" class="w-full max-w-md mb-8 hidden">
+            <h2 id="step4-title" class="text-2xl font-semibold text-purple-600 mb-4"></h2>
+            <div id="activity-options" class="grid grid-cols-2 gap-4 hidden">
+                <button onclick="selectActivity('Aquarium')" class="bg-teal-400 hover:bg-teal-500 text-black px-4 py-2 rounded-lg">Aquarium 🐠</button>
+                <button onclick="selectActivity('Museum')" class="bg-indigo-400 hover:bg-indigo-500 text-black px-4 py-2 rounded-lg">Museum 🖼️</button>
+                <button onclick="selectActivity('Bowling')" class="bg-red-400 hover:bg-red-500 text-black px-4 py-2 rounded-lg">Bowling 🎳</button>
+                <button onclick="selectActivity('Karaoke')" class="bg-violet-400 hover:bg-violet-500 text-black px-4 py-2 rounded-lg">Karaoke 🎤</button>
+                <button onclick="selectActivity('Timezone')" class="bg-orange-400 hover:bg-orange-500 text-black px-4 py-2 rounded-lg">Timezone 🕹️</button>
+                <button onclick="selectActivity('Boardgame')" class="bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg">Boardgame 🎲</button>
+            </div>
+            <div id="santai-options" class="grid grid-cols-2 gap-4 hidden">
+                <button onclick="selectSantai('Ngopi di café')" class="bg-brown-400 hover:bg-brown-500 text-black px-4 py-2 rounded-lg">Ngopi di café ☕</button>
+                <button onclick="selectSantai('Jalan di Blok M')" class="bg-gray-400 hover:bg-gray-500 text-black px-4 py-2 rounded-lg">Jalan di Blok M 🚶</button>
+                <button onclick="selectSantai('Mall')" class="bg-pink-400 hover:bg-pink-500 text-black px-4 py-2 rounded-lg">Mall 🛍️</button>
+                <button onclick="selectSantai('Piknik di taman')" class="bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg">Piknik di taman 🌳</button>
+            </div>
+        </div>
+
+        <button id="continueBtn" onclick="goToPage(3)" class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform hover:scale-105 transition-all hidden">
+            Lanjut ❤️
+        </button>
+    </div>
+
+    <!-- Page 3 -->
+    <div id="page3" class="page flex flex-col items-center justify-center text-center hidden">
+        <div class="text-3xl font-bold text-purple-600 mb-4">Yay! Ini rencana kencan kita 💕</div>
+        <div id="summary-card" class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full mb-8 hidden animate-pulse">
+            <div class="text-xl font-semibold text-pink-600 mb-2" id="summary-day"></div>
+            <div class="text-xl font-semibold text-blue-600 mb-2" id="summary-duration"></div>
+            <div class="text-xl font-semibold text-green-600 mb-2" id="summary-type"></div>
+            <div class="text-2xl font-bold text-purple-600" id="summary-activity"></div>
+        </div>
+        <div class="text-lg text-gray-600">Gak sabar nih! See you soon ✨</div>
+    </div>
+
+    <div id="confetti" class="confetti hidden"></div>
+
+    <script>
+        // State variables
+        let currentStep = 1;
+        let selections = {
+            day: '',
+            duration: '',
+            type: '',
+            activity: ''
+        };
+
+        // Cursor trail
+        const hearts = ['❤️', '💕', '✨', '🌟'];
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.1) { // 10% chance
+                const heart = document.createElement('div');
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.className = 'heart';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        });
+
+        // Escaping button
+        const escapeBtn = document.getElementById('escapeBtn');
+        escapeBtn.addEventListener('mouseenter', () => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            escapeBtn.style.position = 'absolute';
+            escapeBtn.style.left = x + 'px';
+            escapeBtn.style.top = y + 'px';
+            escapeBtn.style.transform = 'none'; // Reset hover transform
+        });
+
+        // Page navigation
+        function goToPage(pageNum) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page${pageNum}`).classList.add('active');
+            if (pageNum === 3) {
+                showSummary();
+                showConfetti();
+            }
+        }
+
+        // Step 1
+        function selectDay(day) {
+            selections.day = day;
+            currentStep = 2;
+            updateStepper();
+            document.getElementById('step1-content').classList.add('hidden');
+            document.getElementById('step2-content').classList.remove('hidden');
+        }
+
+        // Step 2
+        function selectDuration(duration) {
+            selections.duration = duration;
+            currentStep = 3;
+            updateStepper();
+            document.getElementById('step2-content').classList.add('hidden');
+            document.getElementById('step3-content').classList.remove('hidden');
+        }
+
+        // Step 3
+        function selectType(type) {
+            selections.type = type;
+            currentStep = 4;
+            updateStepper();
+            document.getElementById('step3-content').classList.add('hidden');
+            document.getElementById('step4-content').classList.remove('hidden');
+            document.getElementById('step4-title').textContent = type === 'Activity' ? 'Pilih activity seru yuk!' : 'Pilih yang santai yuk!';
+            document.getElementById(type.toLowerCase() + '-options').classList.remove('hidden');
+        }
+
+        // Step 4 Activity
+        function selectActivity(activity) {
+            selections.activity = activity;
+            finishSelections();
+        }
+
+        // Step 4 Santai
+        function selectSantai(santai) {
+            selections.activity = santai;
+            finishSelections();
+        }
+
+        function finishSelections() {
+            document.getElementById('step4-content').classList.add('hidden');
+            document.getElementById('continueBtn').classList.remove('hidden');
+            updateStepper();
+        }
+
+        function updateStepper() {
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step${i}`);
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                } else {
+                    step.classList.remove('completed');
+                }
+            }
+        }
+
+        function showSummary() {
+            document.getElementById('summary-day').textContent = selections.day;
+            document.getElementById('summary-duration').textContent = selections.duration;
+            document.getElementById('summary-type').textContent = selections.type;
+            document.getElementById('summary-activity').textContent = selections.activity;
+            document.getElementById('summary-card').classList.remove('hidden');
+        }
+
+        function showConfetti() {
+            const confetti = document.getElementById('confetti');
+            confetti.classList.remove('hidden');
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.backgroundColor = ['#ff6b9d', '#a55eea', '#74b9ff', '#fdcb6e'][Math.floor(Math.random() * 4)];
+                piece.style.animationDelay = Math.random() * 3 + 's';
+                confetti.appendChild(piece);
+                setTimeout(() => piece.remove(), 3000);
+            }
+            setTimeout(() => confetti.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>
