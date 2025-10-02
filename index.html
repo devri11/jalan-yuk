@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kawaii Date Invite</title>
+  <title>Yukkk Jalannn</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background-color: #fdf6f0;
-      background-image: url('https://i.ibb.co/KDxNNmK/flower-bg.png'); /* Bisa diganti gambar bunga PNG transparan */
+      background-image: url('https://i.ibb.co/KDxNNmK/flower-bg.png'); /* Bisa ganti dengan gambar bunga PNG transparan */
       background-size: cover;
       background-position: center;
       display: flex;
@@ -48,9 +48,10 @@
     }
 
     .popup h2 {
-      font-size: 18px;
+      font-size: 17px;
       margin-bottom: 20px;
       color: #444;
+      line-height: 1.4em;
     }
 
     .buttons {
@@ -78,17 +79,17 @@
       position: absolute;
     }
 
-    /* Animasi hati mengikuti cursor */
-    .heart {
+    /* Animasi sparkle mengikuti cursor */
+    .sparkle {
       position: fixed;
-      font-size: 18px;
+      font-size: 14px;
       pointer-events: none;
-      animation: floatUp 1s linear forwards;
+      animation: floatUp 0.9s linear forwards;
     }
 
     @keyframes floatUp {
       0% {opacity: 1; transform: translateY(0) scale(1);}
-      100% {opacity: 0; transform: translateY(-80px) scale(1.5);}
+      100% {opacity: 0; transform: translateY(-60px) scale(1.3);}
     }
 
     @keyframes fadeIn {
@@ -124,9 +125,9 @@
 <body>
   <!-- Popup utama -->
   <div class="popup" id="mainPopup">
-    <div class="popup-header">💌 Invitation</div>
-    <img src="https://i.ibb.co/mRrpGkF/cute-char.png" alt="Cute Character">
-    <h2>Haii Saintica, Weekend ini jadi bisa jalan bareng gaa? 🥰</h2>
+    <div class="popup-header">✨ Cute Invite ✨</div>
+    <img src="https://tenor.com/view/tkthao219-bubududu-panda-gif-24698724" alt="Cute Character">
+    <h2>Heii Saintica ✨<br>Weekendd ini jadi jalan barengg gaakk??</h2>
     <div class="buttons">
       <button id="yesBtn">Yes I do</button>
       <button id="noBtn">Ga ah malezzz</button>
@@ -135,8 +136,8 @@
 
   <!-- Popup sukses -->
   <div class="success-popup" id="successPopup">
-    <img src="https://i.ibb.co/mRrpGkF/cute-char.png" alt="Happy Character">
-    <h2>Yeay! Aku seneng banget 🥳<br>Untuk detail selanjutnya, kita bahas di WhatsApp yaa 💌</h2>
+    <img src="https://tenor.com/view/bubu-dudu-sseeyall-gif-10831695733717893884" alt="Happy Character">
+    <h2>Yeayyyy!!!! 😆<br>Detailnya kita bahas di WhatsApp yaa 📱</h2>
   </div>
 
   <script>
@@ -145,7 +146,7 @@
     const mainPopup = document.getElementById("mainPopup");
     const successPopup = document.getElementById("successPopup");
 
-    // Fungsi tombol "No" kabur
+    // Tombol "No" kabur
     noBtn.addEventListener("mouseover", () => {
       const x = Math.floor(Math.random() * (window.innerWidth - noBtn.clientWidth));
       const y = Math.floor(Math.random() * (window.innerHeight - noBtn.clientHeight));
@@ -153,23 +154,23 @@
       noBtn.style.top = y + "px";
     });
 
-    // Fungsi tombol "Yes"
+    // Tombol "Yes"
     yesBtn.addEventListener("click", () => {
       mainPopup.style.display = "none";
       successPopup.style.display = "block";
     });
 
-    // Trail hati mengikuti cursor
+    // Trail sparkle
     document.addEventListener("mousemove", (e) => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = e.pageX + "px";
-      heart.style.top = e.pageY + "px";
-      heart.innerText = "💖";
-      document.body.appendChild(heart);
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = e.pageX + "px";
+      sparkle.style.top = e.pageY + "px";
+      sparkle.innerText = "✨";
+      document.body.appendChild(sparkle);
       setTimeout(() => {
-        heart.remove();
-      }, 1000);
+        sparkle.remove();
+      }, 900);
     });
   </script>
 </body>
