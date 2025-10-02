@@ -2,134 +2,214 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Kuis Date Seru 😍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajak Jalan Cantik ✨</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pink: '#ff6b9d',
+            purple: '#a55eea',
+            blue: '#74b9ff',
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffdee9, #b5fffc);
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    body { 
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%); 
+      font-family: 'Poppins', sans-serif; 
     }
-
-    .container {
-      width: 100%;
-      max-width: 500px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      overflow: hidden;
-      padding: 20px;
-      text-align: center;
+    .page { display: none; min-height: 100vh; padding: 2rem; }
+    .page.active { display: block; }
+    .gif-wrapper { margin-bottom: 1rem; }
+    .gif-wrapper img { width: 120px; height: auto; margin: 0 auto; }
+    .question-box {
+      background: white; 
+      border-radius: 1rem; 
+      padding: 1rem; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+      margin-bottom: 1.5rem;
     }
-
-    .question {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+    .button-fun { 
+      transition: all 0.2s ease; 
     }
-
-    .question.active {
-      display: block;
-      opacity: 1;
-    }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    button {
-      background: #ff6b81;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #ff4757;
-    }
-
-    .result {
-      font-size: 20px;
-      font-weight: bold;
-      color: #2f3542;
+    .button-fun:hover { 
+      transform: scale(1.05) rotate(-2deg); 
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <!-- Pertanyaan 1 -->
-    <div class="question active" id="q1">
-      <p>Halo 🙌 weekend ini ada waktu buat jalan-jalan nggak?</p>
-      <button onclick="nextQuestion(2, 'Mau jalan-jalan')">Boleh banget 😁</button>
-      <button onclick="nextQuestion(2, 'Nggak bisa')">Kayaknya enggak 🙈</button>
-    </div>
+<body class="overflow-x-hidden">
 
-    <!-- Pertanyaan 2 -->
-    <div class="question" id="q2">
-      <p>Pilih hari apa nih?</p>
-      <button onclick="nextQuestion(3, 'Sabtu')">Sabtu</button>
-      <button onclick="nextQuestion(3, 'Minggu')">Minggu</button>
+  <!-- Page 1 -->
+  <div id="page1" class="page active flex flex-col items-center justify-center text-center">
+    <div class="gif-wrapper">
+      <img src="https://media.tenor.com/qt5Wx5FHQ9EAAAAM/line-friends-brown.gif" alt="Brown GIF">
     </div>
-
-    <!-- Pertanyaan 3 -->
-    <div class="question" id="q3">
-      <p>Mau jalan full day atau santai aja?</p>
-      <button onclick="nextQuestion(4, 'Full day')">Full Day 🔥</button>
-      <button onclick="nextQuestion(4, 'Santai aja')">Santai aja 😎</button>
+    <div class="text-4xl md:text-6xl font-bold text-purple-600 mb-8 animate-bounce">
+      Haii 👋, kamu weekend ini bisa jalan sama aku gak?
     </div>
-
-    <!-- Pertanyaan 4 -->
-    <div class="question" id="q4">
-      <p>Pilih aktivitas seru yuk!</p>
-      <button onclick="nextQuestion(5, 'Karaoke')">Karaoke 🎤</button>
-      <button onclick="nextQuestion(5, 'Ngopi')">Ngopi ☕</button>
-    </div>
-
-    <!-- Pertanyaan 5 -->
-    <div class="question" id="q5">
-      <p>Mau outdoor atau indoor?</p>
-      <button onclick="finish('Outdoor')">Outdoor 🌳</button>
-      <button onclick="finish('Indoor')">Indoor 🏠</button>
-    </div>
-
-    <!-- Hasil -->
-    <div class="question" id="result">
-      <p class="result">Terima kasih sudah jawab 💖</p>
-      <p id="summary"></p>
+    <div class="space-y-4">
+      <button onclick="goToPage(2)" class="button-fun bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg">
+        Bisa dong ✨
+      </button>
+      <button id="escapeBtn" class="button-fun escaping-btn bg-gray-400 hover:bg-red-500 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg">
+        Hmm belum bisa 😅
+      </button>
     </div>
   </div>
 
+  <!-- Page 2 -->
+  <div id="page2" class="page flex flex-col items-center justify-center">
+    <div class="gif-wrapper">
+      <img src="https://media.tenor.com/ZwDQxjTI5tQAAAAM/line-friends-cony.gif" alt="Cony GIF">
+    </div>
+    <div class="text-3xl font-bold text-pink-600 mb-4">Ayo rencanain yuk! ❤️</div>
+    <div class="stepper mb-8 flex gap-2">
+      <div class="step" id="step1">1</div>
+      <div class="step" id="step2">2</div>
+      <div class="step" id="step3">3</div>
+      <div class="step" id="step4">4</div>
+    </div>
+    
+    <!-- Step 1: Hari -->
+    <div id="step1-content" class="w-full max-w-md mb-8 question-box">
+      <div class="gif-wrapper">
+        <img src="https://media.tenor.com/0YtwZRPj7K8AAAAM/brown-line.gif" alt="Brown Thinking">
+      </div>
+      <h2 class="text-2xl font-semibold text-purple-600 mb-4">Lebih enak Sabtu atau Minggu nih? 🤔</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <button onclick="selectDay('Sabtu')" class="button-fun bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold">Sabtu 🌞</button>
+        <button onclick="selectDay('Minggu')" class="button-fun bg-orange-400 hover:bg-orange-500 text-black px-6 py-3 rounded-lg font-semibold">Minggu 🌻</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Durasi -->
+    <div id="step2-content" class="w-full max-w-md mb-8 question-box hidden">
+      <div class="gif-wrapper">
+        <img src="https://media.tenor.com/xQZ6zXrYjmgAAAAM/line-friends-brown-cony.gif" alt="Brown Cony Hug">
+      </div>
+      <h2 class="text-2xl font-semibold text-purple-600 mb-4">Mau jalan full day atau sebentar aja? 🕒</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <button onclick="selectDuration('Full day')" class="button-fun bg-green-400 hover:bg-green-500 text-black px-6 py-3 rounded-lg font-semibold">Full day 🚀</button>
+        <button onclick="selectDuration('Half day')" class="button-fun bg-purple-400 hover:bg-purple-500 text-black px-6 py-3 rounded-lg font-semibold">Half day 🌙</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Tipe -->
+    <div id="step3-content" class="w-full max-w-md mb-8 question-box hidden">
+      <div class="gif-wrapper">
+        <img src="https://media.tenor.com/BhS3hlFOe74AAAAM/cony-line.gif" alt="Cony Excited">
+      </div>
+      <h2 class="text-2xl font-semibold text-purple-600 mb-4">Mau ada activity seru atau santai aja ngobrol? 😎</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <button onclick="selectType('Activity')" class="button-fun bg-pink-400 hover:bg-pink-500 text-black px-6 py-3 rounded-lg font-semibold">Activity 🎉</button>
+        <button onclick="selectType('Santai')" class="button-fun bg-blue-400 hover:bg-blue-500 text-black px-6 py-3 rounded-lg font-semibold">Santai ☕</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Options -->
+    <div id="step4-content" class="w-full max-w-md mb-8 question-box hidden">
+      <div class="gif-wrapper">
+        <img src="https://media.tenor.com/40ZnOa4lXsIAAAAM/browncony-linefriends.gif" alt="Brown & Cony Happy">
+      </div>
+      <h2 id="step4-title" class="text-2xl font-semibold text-purple-600 mb-4"></h2>
+      <div id="activity-options" class="grid grid-cols-2 gap-4 hidden">
+        <button onclick="selectActivity('Aquarium')" class="button-fun bg-teal-400 hover:bg-teal-500 text-black px-4 py-2 rounded-lg">Aquarium 🐠</button>
+        <button onclick="selectActivity('Museum')" class="button-fun bg-indigo-400 hover:bg-indigo-500 text-black px-4 py-2 rounded-lg">Museum 🖼️</button>
+        <button onclick="selectActivity('Bowling')" class="button-fun bg-red-400 hover:bg-red-500 text-black px-4 py-2 rounded-lg">Bowling 🎳</button>
+        <button onclick="selectActivity('Karaoke')" class="button-fun bg-violet-400 hover:bg-violet-500 text-black px-4 py-2 rounded-lg">Karaoke 🎤</button>
+        <button onclick="selectActivity('Timezone')" class="button-fun bg-orange-400 hover:bg-orange-500 text-black px-4 py-2 rounded-lg">Timezone 🕹️</button>
+        <button onclick="selectActivity('Boardgame')" class="button-fun bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg">Boardgame 🎲</button>
+      </div>
+      <div id="santai-options" class="grid grid-cols-2 gap-4 hidden">
+        <button onclick="selectSantai('Ngopi di café')" class="button-fun bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg">Ngopi di café ☕</button>
+        <button onclick="selectSantai('Jalan di Blok M')" class="button-fun bg-gray-400 hover:bg-gray-500 text-black px-4 py-2 rounded-lg">Jalan di Blok M 🚶</button>
+        <button onclick="selectSantai('Mall')" class="button-fun bg-pink-400 hover:bg-pink-500 text-black px-4 py-2 rounded-lg">Mall 🛍️</button>
+        <button onclick="selectSantai('Piknik di taman')" class="button-fun bg-green-400 hover:bg-green-500 text-black px-4 py-2 rounded-lg">Piknik di taman 🌳</button>
+      </div>
+    </div>
+
+    <button id="continueBtn" onclick="goToPage(3)" class="button-fun bg-pink-500 hover:bg-pink-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hidden">
+      Lanjut ❤️
+    </button>
+  </div>
+
+  <!-- Page 3 -->
+  <div id="page3" class="page flex flex-col items-center justify-center text-center hidden">
+    <div class="gif-wrapper">
+      <img src="https://media.tenor.com/nlzIRbkI7FwAAAAM/line-friends-brown-and-cony.gif" alt="Brown Cony Love">
+    </div>
+    <div class="text-3xl font-bold text-purple-600 mb-4">Yay! Ini rencana kencan kita 💕</div>
+    <div id="summary-card" class="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full mb-8 hidden animate-pulse">
+      <div class="text-xl font-semibold text-pink-600 mb-2" id="summary-day"></div>
+      <div class="text-xl font-semibold text-blue-600 mb-2" id="summary-duration"></div>
+      <div class="text-xl font-semibold text-green-600 mb-2" id="summary-type"></div>
+      <div class="text-2xl font-bold text-purple-600" id="summary-activity"></div>
+    </div>
+    <div class="text-lg text-gray-600">Gak sabar nih! See you soon ✨</div>
+  </div>
+
+  <!-- Script (sama kayak punyamu, tanpa perubahan logika) -->
   <script>
-    let answers = [];
+    let currentStep = 1;
+    let selections = { day:'', duration:'', type:'', activity:'' };
 
-    function nextQuestion(nextId, answer) {
-      if (answer) answers.push(answer);
+    const escapeBtn = document.getElementById('escapeBtn');
+    escapeBtn.addEventListener('mouseenter', () => {
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      escapeBtn.style.position = 'absolute';
+      escapeBtn.style.left = x + 'px';
+      escapeBtn.style.top = y + 'px';
+    });
 
-      // sembunyiin yang aktif
-      document.querySelector(".question.active").classList.remove("active");
-
-      // tampilkan pertanyaan berikutnya
-      document.getElementById("q" + nextId).classList.add("active");
+    function goToPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(`page${pageNum}`).classList.add('active');
+      if (pageNum === 3) { showSummary(); }
     }
 
-    function finish(finalAnswer) {
-      if (finalAnswer) answers.push(finalAnswer);
+    function selectDay(day) {
+      selections.day = day;
+      currentStep = 2;
+      document.getElementById('step1-content').classList.add('hidden');
+      document.getElementById('step2-content').classList.remove('hidden');
+    }
 
-      document.querySelector(".question.active").classList.remove("active");
-      document.getElementById("result").classList.add("active");
+    function selectDuration(duration) {
+      selections.duration = duration;
+      currentStep = 3;
+      document.getElementById('step2-content').classList.add('hidden');
+      document.getElementById('step3-content').classList.remove('hidden');
+    }
 
-      // ringkas hasil
-      document.getElementById("summary").innerText =
-        "Pilihanmu: " + answers.join(" → ");
+    function selectType(type) {
+      selections.type = type;
+      currentStep = 4;
+      document.getElementById('step3-content').classList.add('hidden');
+      document.getElementById('step4-content').classList.remove('hidden');
+      document.getElementById('step4-title').textContent = type === 'Activity' ? 'Pilih activity seru yuk!' : 'Pilih yang santai yuk!';
+      document.getElementById(type.toLowerCase() + '-options').classList.remove('hidden');
+    }
+
+    function selectActivity(activity) { selections.activity = activity; finishSelections(); }
+    function selectSantai(santai) { selections.activity = santai; finishSelections(); }
+
+    function finishSelections() {
+      document.getElementById('step4-content').classList.add('hidden');
+      document.getElementById('continueBtn').classList.remove('hidden');
+    }
+
+    function showSummary() {
+      document.getElementById('summary-day').textContent = selections.day;
+      document.getElementById('summary-duration').textContent = selections.duration;
+      document.getElementById('summary-type').textContent = selections.type;
+      document.getElementById('summary-activity').textContent = selections.activity;
+      document.getElementById('summary-card').classList.remove('hidden');
     }
   </script>
 </body>
